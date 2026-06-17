@@ -84,6 +84,18 @@ if uploaded_file is not None:
 			else:
 				display_message = "Railway Track itself has one/multiple defects."
 			
+			# --- SUPERVISOR'S "RISK LEVEL" LOGIC ---
+			if confidence > 0.90:
+				risk_level = "Very High"
+			elif confidence > 0.75:
+				risk_level = "High"
+			elif confidence > 0.50:
+				risk_level = "Medium"
+			elif confidence > 0.30:
+				risk_level = "Low"
+			else:
+				risk_level = "Very Low"
+			
 			# --- Grad-CAM Generation ---
 			input_tensor = preprocess_image(rgb_img_float, mean=[0.0, 0.0, 0.0], std=[1.0, 1.0, 1.0]).to(device)
 			input_tensor.requires_grad_(True)
@@ -98,6 +110,9 @@ if uploaded_file is not None:
 			
 			# Classification Result
 			st.success(f"**Prediction:** {display_message} ({confidence * 100:.1f}% confidence)")
+			
+			# Display the Risk Level
+			st.warning(f"**Analysed Risk Level:** {risk_level}")
 			
 			# Image Columns
 			col1, col2 = st.columns(2)
