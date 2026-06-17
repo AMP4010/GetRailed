@@ -1,3 +1,4 @@
+#railpage.py
 import streamlit as st
 import cv2
 import torch
@@ -85,16 +86,22 @@ if uploaded_file is not None:
 				display_message = "Railway Track itself has one/multiple defects."
 			
 			# --- SUPERVISOR'S "RISK LEVEL" LOGIC ---
-			if confidence > 0.90:
-				risk_level = "Very High"
-			elif confidence > 0.75:
-				risk_level = "High"
-			elif confidence > 0.50:
-				risk_level = "Medium"
-			elif confidence > 0.30:
-				risk_level = "Low"
+			if raw_class_name == "allgood":
+				if confidence > 0.50:
+					risk_level = "None"
+				else:
+					risk_level = "Very Low"
 			else:
-				risk_level = "Very Low"
+				if confidence > 0.90:
+					risk_level = "Very High"
+				elif confidence > 0.75:
+					risk_level = "High"
+				elif confidence > 0.50:
+					risk_level = "Medium"
+				elif confidence > 0.30:
+					risk_level = "Low"
+				else:
+					risk_level = "Very Low"
 			
 			# --- Grad-CAM Generation ---
 			input_tensor = preprocess_image(rgb_img_float, mean=[0.0, 0.0, 0.0], std=[1.0, 1.0, 1.0]).to(device)
@@ -117,10 +124,8 @@ if uploaded_file is not None:
 			# Image Columns
 			col1, col2 = st.columns(2)
 			with col1:
-				# Fixed the deprecation warning here
 				st.image(rgb_img_resized, caption="Original Image", use_container_width=True)
 			with col2:
-				# Fixed the deprecation warning here
 				st.image(heatmap_vis, caption="AI Attention Heatmap", use_container_width=True)
 			
 			# --- Heatmap Legend ---
