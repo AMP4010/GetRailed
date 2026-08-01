@@ -79,8 +79,7 @@ if uploaded_file is not None:
             raw_class_name = results.names[top_class_idx]
             
             # --- SUPERVISOR'S "RISK LEVEL" & EXPLANATION LOGIC ---
-
-	        if raw_class_name == "allgood":
+			if raw_class_name == "allgood":
 			    if confidence > 0.50:
 			        risk_level = "None"
 			        explanation = (
