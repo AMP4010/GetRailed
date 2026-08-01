@@ -79,88 +79,88 @@ if uploaded_file is not None:
             raw_class_name = results.names[top_class_idx]
             
             # --- SUPERVISOR'S "RISK LEVEL" & EXPLANATION LOGIC ---
-			if raw_class_name == "allgood":
-			    if confidence > 0.50:
-			        risk_level = "None"
-			        explanation = (
-			            f"The model detected no structural or fastener anomalies with high confidence ({confidence:.1%}). "
-			            "The heatmap shows low activation across the rail, indicating a healthy track section."
-			        )
-			    else:
-			        risk_level = "Very Low"
-			        explanation = (
-			            f"The model classified this as non-defective, but confidence is moderate ({confidence:.1%}). "
-			            "The heatmap displays slight surface noise or minor visual variations; routine monitoring recommended."
-			        )
-			
-			elif raw_class_name == "rail":
-			    if confidence > 0.90:
-			        risk_level = "Very High"
-			        explanation = (
-			            f"Rail defective track : Critical rail track defect detected with very high confidence ({confidence:.1%}). "
-			            "The heatmap highlights severe structural anomalies (e.g., major cracks, severe wear, or severe alignment faults)."
-			        )
-			    elif confidence > 0.75:
-			        risk_level = "High"
-			        explanation = (
-			            f"Rail defective track : Significant rail track defect detected with high confidence ({confidence:.1%}). "
-			            "The heatmap intensely focuses on visual surface irregularities or structural degradation on the rail head/web."
-			        )
-			    elif confidence > 0.50:
-			        risk_level = "Medium"
-			        explanation = (
-			            f"Rail defective track : Possible track defect identified with moderate confidence ({confidence:.1%}). "
-			            "The heatmap marks potential surface damage or material fatigue that warrants physical inspection."
-			        )
-			    elif confidence > 0.30:
-			        risk_level = "Low"
-			        explanation = (
-			            f"Rail defective track : Minor anomaly detected with low confidence ({confidence:.1%}). "
-			            "The heatmap shows weak activation, likely caused by rust, dirt, or lighting shadows rather than a critical fault."
-			        )
-			    else:
-			        risk_level = "Very Low"
-			        explanation = (
-			            f"Rail defective track : Uncertain detection of track defect (confidence: {confidence:.1%}). "
-			            "The heatmap displays scattered, weak activation; unlikely to be a structural defect, but logged for review."
-			        )
-			
-			elif raw_class_name == "fastener":
-			    if confidence > 0.90:
-			        risk_level = "Very High"
-			        explanation = (
-			            f"Fastener defective track : Severe fastener anomaly detected with very high confidence ({confidence:.1%}). "
-			            "The heatmap concentrates sharply on missing, broken, or completely detached clip/bolt components."
-			        )
-			    elif confidence > 0.75:
-			        risk_level = "High"
-			        explanation = (
-			            f"Fastener defective track : Fastener defect detected with high confidence ({confidence:.1%}). "
-			            "The heatmap highlights loose, misplaced, or damaged mounting clips along the tie/sleeper line."
-			        )
-			    elif confidence > 0.50:
-			        risk_level = "Medium"
-			        explanation = (
-			            f"Fastener defective track : Potential fastener defect identified with moderate confidence ({confidence:.1%}). "
-			            "The heatmap indicates localized irregularities around the clip assembly; manual verification suggested."
-			        )
-			    elif confidence > 0.30:
-			        risk_level = "Low"
-			        explanation = (
-			            f"Fastener defective track : Minor fastener anomaly flagged with low confidence ({confidence:.1%}). "
-			            "The heatmap shows weak focal points, possibly due to ballast occlusion, rust, or debris near the fastener."
-			        )
-			    else:
-			        risk_level = "Very Low"
-			        explanation = (
-			            f"Fastener defective track : Uncertain fastener defect signal (confidence: {confidence:.1%}). "
-			            "The heatmap displays minimal focal clustering around tie points; likely a false positive due to visual noise."
-			        )
-			
-			else:
-			    # Fallback for unexpected class names
-			    risk_level = "Unknown"
-			    explanation = f"Unrecognized class '{raw_class_name}' with confidence score of {confidence:.1%}."
+            if raw_class_name == "allgood":
+                if confidence > 0.50:
+                    risk_level = "None"
+                    explanation = (
+                        f"The model detected no structural or fastener anomalies with high confidence ({confidence:.1%}). "
+                        "The heatmap shows low activation across the rail, indicating a healthy track section."
+                    )
+                else:
+                    risk_level = "Very Low"
+                    explanation = (
+                        f"The model classified this as non-defective, but confidence is moderate ({confidence:.1%}). "
+                        "The heatmap displays slight surface noise or minor visual variations; routine monitoring recommended."
+                    )
+            
+            elif raw_class_name == "rail":
+                if confidence > 0.90:
+                    risk_level = "Very High"
+                    explanation = (
+                        f"Rail defective track : Critical rail track defect detected with very high confidence ({confidence:.1%}). "
+                        "The heatmap highlights severe structural anomalies (e.g., major cracks, severe wear, or severe alignment faults)."
+                    )
+                elif confidence > 0.75:
+                    risk_level = "High"
+                    explanation = (
+                        f"Rail defective track : Significant rail track defect detected with high confidence ({confidence:.1%}). "
+                        "The heatmap intensely focuses on visual surface irregularities or structural degradation on the rail head/web."
+                    )
+                elif confidence > 0.50:
+                    risk_level = "Medium"
+                    explanation = (
+                        f"Rail defective track : Possible track defect identified with moderate confidence ({confidence:.1%}). "
+                        "The heatmap marks potential surface damage or material fatigue that warrants physical inspection."
+                    )
+                elif confidence > 0.30:
+                    risk_level = "Low"
+                    explanation = (
+                        f"Rail defective track : Minor anomaly detected with low confidence ({confidence:.1%}). "
+                        "The heatmap shows weak activation, likely caused by rust, dirt, or lighting shadows rather than a critical fault."
+                    )
+                else:
+                    risk_level = "Very Low"
+                    explanation = (
+                        f"Rail defective track : Uncertain detection of track defect (confidence: {confidence:.1%}). "
+                        "The heatmap displays scattered, weak activation; unlikely to be a structural defect, but logged for review."
+                    )
+            
+            elif raw_class_name == "fastener":
+                if confidence > 0.90:
+                    risk_level = "Very High"
+                    explanation = (
+                        f"Fastener defective track : Severe fastener anomaly detected with very high confidence ({confidence:.1%}). "
+                        "The heatmap concentrates sharply on missing, broken, or completely detached clip/bolt components."
+                    )
+                elif confidence > 0.75:
+                    risk_level = "High"
+                    explanation = (
+                        f"Fastener defective track : Fastener defect detected with high confidence ({confidence:.1%}). "
+                        "The heatmap highlights loose, misplaced, or damaged mounting clips along the tie/sleeper line."
+                    )
+                elif confidence > 0.50:
+                    risk_level = "Medium"
+                    explanation = (
+                        f"Fastener defective track : Potential fastener defect identified with moderate confidence ({confidence:.1%}). "
+                        "The heatmap indicates localized irregularities around the clip assembly; manual verification suggested."
+                    )
+                elif confidence > 0.30:
+                    risk_level = "Low"
+                    explanation = (
+                        f"Fastener defective track : Minor fastener anomaly flagged with low confidence ({confidence:.1%}). "
+                        "The heatmap shows weak focal points, possibly due to ballast occlusion, rust, or debris near the fastener."
+                    )
+                else:
+                    risk_level = "Very Low"
+                    explanation = (
+                        f"Fastener defective track : Uncertain fastener defect signal (confidence: {confidence:.1%}). "
+                        "The heatmap displays minimal focal clustering around tie points; likely a false positive due to visual noise."
+                    )
+            
+            else:
+                # Fallback for unexpected class names
+                risk_level = "Unknown"
+                explanation = f"Unrecognized class '{raw_class_name}' with confidence score of {confidence:.1%}."
             
             # --- Grad-CAM Generation ---
             input_tensor = preprocess_image(rgb_img_float, mean=[0.0, 0.0, 0.0], std=[1.0, 1.0, 1.0]).to(device)
