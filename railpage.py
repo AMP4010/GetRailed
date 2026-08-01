@@ -93,7 +93,7 @@ if uploaded_file is not None:
                         "The heatmap displays slight surface noise or minor visual variations; routine monitoring recommended."
                     )
 
-            elif raw_class_name == "defective":
+            elif raw_class_name == "rail":
                 if confidence > 0.90:
                     risk_level = "Very High"
                     explanation = (
@@ -125,7 +125,7 @@ if uploaded_file is not None:
                         "The heatmap displays scattered, weak activation; unlikely to be a structural defect, but logged for review."
                     )
 
-            elif raw_class_name == "fastener_defective":
+            elif raw_class_name == "fastener":
                 if confidence > 0.90:
                     risk_level = "Very High"
                     explanation = (
